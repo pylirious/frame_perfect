@@ -164,7 +164,7 @@ export default function Navbar() {
                                     {item.name}
                                 </Disclosure.Button>
                             ))}
-                        </div>out
+                        </div>
                         {session && session.user ?
                             <div className="border-t border-gray-700 pt-4 pb-3">
                             <div className="flex items-center px-5 sm:px-6">
