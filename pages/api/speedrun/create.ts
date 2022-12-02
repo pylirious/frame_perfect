@@ -8,7 +8,8 @@ export default async function handler(
 ) {
     const session = await getSession({req})
     if (!session || !session.user || !session.user.email) return res.status(403)
-
-    if (req.method !== "POST") res.status(400)
+    console.log(req);
+    if (req.method !== "POST") return res.status(400)
     res.status(200).json({name: 'John Doe'})
+
 }

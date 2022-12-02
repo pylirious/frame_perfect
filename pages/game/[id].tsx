@@ -76,7 +76,6 @@ GameView() {
                                                                 {position.id}
                                                             </p>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </a>
