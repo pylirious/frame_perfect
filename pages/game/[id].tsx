@@ -1,33 +1,35 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useRouter} from "next/router";
-import {Game} from "../../models/Game";
+import {Game} from "../../types/Game";
 import {minify} from "next/dist/build/swc";
-import {CalendarIcon, ClockIcon, MapPinIcon, UsersIcon} from '@heroicons/react/24/outline';
-import {Speedrun} from "../../models/Speedrun";
+import {CalendarIcon, ClockIcon, MapPinIcon, UsersIcon, XCircleIcon} from '@heroicons/react/24/outline';
+import {Speedrun} from "../../types/Speedrun";
+import {WithId} from "mongodb";
+import MessageContext from "../../components/context/MessageContext";
 
 function
 
 GameView() {
     const router = useRouter()
     const {id} = router.query;
-    const [game, setGame] = useState<Game | undefined>({
-        id: "minecraft",
-        name: "Minecraft",
-        image: "https://www.minecraft.net/content/dam/games/minecraft/logos/logo-minecraft.svg"
-    });
-    const [records, setRecords] = useState<Speedrun[] | undefined>([{
-        game: {
-            id: "minecraft",
-            name: "Minecraft",
-            image: "https://www.minecraft.net/content/dam/games/minecraft/logos/logo-minecraft.svg"
-        }, time: 143646234, id: "tesdlfk", name: "Felix"
-    }, {
-        game: {
-            id: "minecraft",
-            name: "Minecraft",
-            image: "https://www.minecraft.net/content/dam/games/minecraft/logos/logo-minecraft.svg"
-        }, time: 143646234, id: "tesdlfk", name: "Felix"
-    }]);
+    const [game, setGame] = useState<WithId<Game>>();
+    const {setMessage} = useContext(MessageContext);
+    useEffect(() => {
+        if (!router.isReady) return;
+        fetch(`/api/game/${id}`).then(r => r.json().then(res => {
+            console.log(res);
+            if (res.message) {
+                setMessage({
+                    title: "Error",
+                    icon: <XCircleIcon className={"w-8 h-8 text-red-500"}/>,
+                    description: res.message
+                })
+            } else {
+                setGame(res)
+            }
+        }))
+    }, [router.isReady, id])
+    const [records, setRecords] = useState<Speedrun[]>([]);
 
     return (
         game ?

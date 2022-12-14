@@ -6,6 +6,12 @@ declare global {
             REDDIT_ID: string,
             REDDIT_SECRET: string,
             NODE_ENV: 'development' | 'production';
+            MONGODB_URI: string;
+
+            DB_NAME: string;
+            GAME_COLLECTION_NAME: string;
+            USER_COLLECTION_NAME: string;
+            RUN_COLLECTION_NAME: string;
         }
     }
 }

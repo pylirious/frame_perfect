@@ -5,4 +5,5 @@ export interface Speedrun {
     game: Game,
     time: number,
     name: string,
+    user: string
 }

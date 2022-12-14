@@ -15,7 +15,7 @@
 import {Dispatch, SetStateAction, useEffect, useState} from 'react'
 import {CheckIcon, ChevronUpDownIcon} from '@heroicons/react/20/solid'
 import {Combobox} from '@headlessui/react'
-import {Game} from "../models/Game";
+import {Game} from "../types/Game";
 
 function classNames(...classes: (string | boolean)[]) {
     return classes.filter(Boolean).join(' ')

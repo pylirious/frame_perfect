@@ -1,3 +1,4 @@
+# Use root/example as user/password credentials
 version: '3.1'
 
 services:
@@ -5,11 +6,12 @@ services:
   mongo:
     image: mongo
     restart: always
-    ports:
-      - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - .volumes/mongo/:/data/db
+      - ./utils/local_mongo_scripts:/docker-entrypoint-initdb.d:ro
 
   mongo-express:
     image: mongo-express

@@ -1,10 +1,11 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {Game} from "../../models/Game";
+import {Game} from "../../types/Game";
 import {getMongoClient} from "../../lib/mongodb";
+import {WithId} from "mongodb";
 
 type ResponseData = {
     message?: string
-    games?: Game[]
+    games?: WithId<Game>[]
 }
 
 export default async function handler(
@@ -16,8 +17,8 @@ export default async function handler(
     res.status(200).json({games})
 }
 
-const getGames = async () => {
-    const db = await getMongoClient()
-    let games= await db.db("FramePerfect").collection("games").find().toArray()
-    return games.map((game) => ({name: game.name!, id: game.id!, image: game.image}));
+const getGames: () => Promise<WithId<Game>[]> = async () => {
+    const mongoClient = await getMongoClient()
+    return  await mongoClient.db("FramePerfect").collection<Game>(process.env.GAME_COLLECTION_NAME).find().toArray()
+
 }
