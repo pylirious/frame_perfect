@@ -1,9 +1,11 @@
 import {Game} from "./Game";
+import {User} from "next-auth";
+import {ObjectId} from "mongodb";
 
 export interface Speedrun {
-    id: string,
-    game: Game,
+    game: ObjectId,
     time: number,
     name: string,
-    user: string
+    user: User,
+    link: string
 }

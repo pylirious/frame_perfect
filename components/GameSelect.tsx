@@ -16,19 +16,20 @@ import {Dispatch, SetStateAction, useEffect, useState} from 'react'
 import {CheckIcon, ChevronUpDownIcon} from '@heroicons/react/20/solid'
 import {Combobox} from '@headlessui/react'
 import {Game} from "../types/Game";
+import {WithId} from "mongodb";
 
 function classNames(...classes: (string | boolean)[]) {
     return classes.filter(Boolean).join(' ')
 }
 
 interface PropTypes {
-    selectedGame: Game | undefined
-    setSelectedGame: Dispatch<SetStateAction<Game>>
+    selectedGame: WithId<Game> | undefined
+    setSelectedGame: Dispatch<SetStateAction<WithId<Game>>>
 }
 
 export default function GameSelect(props: PropTypes) {
     const [query, setQuery] = useState('')
-    const [games, setGames] = useState<Game[]>([]);
+    const [games, setGames] = useState<WithId<Game>[]>([]);
 
     useEffect(() => {
         fetch('/api/games').then(r => r.json().then(res => {
@@ -60,7 +61,7 @@ export default function GameSelect(props: PropTypes) {
                 {filteredGames.length > 0 && (
                     <Combobox.Options
                         className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                        {filteredGames.map((game: Game) => (
+                        {filteredGames.map((game: WithId<Game>) => (
                             <Combobox.Option
                                 key={game.id}
                                 value={game}

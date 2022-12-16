@@ -1,26 +1,32 @@
-import {Dispatch, Fragment, SetStateAction, useEffect, useRef, useState} from 'react'
+import {Dispatch, Fragment, SetStateAction, useContext, useEffect, useRef, useState} from 'react'
 import {Dialog, Transition} from '@headlessui/react'
-import {ExclamationTriangleIcon, PlusCircleIcon} from '@heroicons/react/24/outline'
+import {CheckCircleIcon, PlusCircleIcon, XCircleIcon} from '@heroicons/react/24/outline'
 import axios from "axios";
 import {WithId} from "mongodb";
 import {Game} from "../types/Game";
 import {classNames} from "../utils";
 import {CheckIcon, ChevronUpDownIcon} from "@heroicons/react/20/solid";
 import {Combobox} from '@headlessui/react'
+import MessageContext from "./context/MessageContext";
+
 
 interface PropTypes {
     open: boolean
     setOpen: Dispatch<SetStateAction<boolean>>
+    game?: WithId<Game>
 }
 
 
 export default function CreationModal(props: PropTypes) {
     const cancelButtonRef = useRef(null)
     const [games, setGames] = useState<WithId<Game>[]>([]);
-    const [time, setTime] = useState("");
+    const [time, setTime] = useState<number>();
     const [nickname, setNickname] = useState("");
+    const [link, setLink] = useState("");
     const [query, setQuery] = useState('')
-    const [game, setGame] = useState<WithId<Game>>();
+    const [game, setGame] = useState<WithId<Game> | undefined>(props.game);
+
+    const {setMessage} = useContext(MessageContext);
 
     const filteredGames =
         query === ''
@@ -30,6 +36,7 @@ export default function CreationModal(props: PropTypes) {
             })
 
     useEffect(() => {
+        if (props.game) return;
         axios.get("/api/games").then(res => setGames(res.data.games))
     }, []);
 
@@ -49,7 +56,7 @@ export default function CreationModal(props: PropTypes) {
                 </Transition.Child>
 
                 <div className="fixed inset-0 z-10 overflow-y-auto">
-                    <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                    <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-300"
@@ -90,161 +97,110 @@ export default function CreationModal(props: PropTypes) {
                                                 <div className="sm:col-span-3">
                                                     <label htmlFor="last-name"
                                                            className="block text-sm font-medium text-gray-700">
-                                                        Time
+                                                        Time (in ms)
                                                     </label>
                                                     <div className="mt-1">
                                                         <input
-                                                            type="text"
+                                                            type="number"
                                                             name="time"
                                                             id="time"
                                                             value={time}
-                                                            onInput={event => setTime(event.currentTarget.value)}
+                                                            onInput={event => setTime(parseInt(event.currentTarget.value))}
                                                             className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                         />
                                                     </div>
                                                 </div>
 
                                                 <div className="sm:col-span-4">
-                                                    <label htmlFor="email"
-                                                           className="block text-sm font-medium text-gray-700">Game</label>
                                                     <div className="mt-1">
-                                                        <Combobox as="div" value={game} onChange={setGame}>
-                                                            <Combobox.Label
-                                                                className="block text-sm font-medium text-gray-700">Game</Combobox.Label>
-                                                            <div className="relative mt-1">
-                                                                <Combobox.Input
-                                                                    className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-                                                                    onChange={(event) => setQuery(event.target.value)}
-                                                                    displayValue={(game: WithId<Game>) => game?.name}
-                                                                />
-                                                                <Combobox.Button
-                                                                    className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
-                                                                    <ChevronUpDownIcon className="h-5 w-5 text-gray-400"
-                                                                                       aria-hidden="true"/>
-                                                                </Combobox.Button>
+                                                        {props.game ?
+                                                            <div>
+                                                                <label htmlFor="street-address"
+                                                                       className="block text-sm font-medium text-gray-700">Game</label>
+                                                                <div className="mt-1">
+                                                                    <input
+                                                                        type="text"
+                                                                        name="game"
+                                                                        disabled={true}
+                                                                        id="game"
+                                                                        value={props.game.name}
+                                                                        className="block bg-gray-100 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            :
+                                                            <Combobox as="div" value={game} onChange={setGame}>
+                                                                <Combobox.Label
+                                                                    className="block text-sm font-medium text-gray-700">Game</Combobox.Label>
+                                                                <div className="relative mt-1">
+                                                                    <Combobox.Input
+                                                                        className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                                                                        onChange={(event) => setQuery(event.target.value)}
+                                                                        displayValue={(game: WithId<Game>) => game?.name}
+                                                                    />
+                                                                    <Combobox.Button
+                                                                        className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+                                                                        <ChevronUpDownIcon
+                                                                            className="h-5 w-5 text-gray-400"
+                                                                            aria-hidden="true"/>
+                                                                    </Combobox.Button>
 
-                                                                {filteredGames.length > 0 && (
-                                                                    <Combobox.Options
-                                                                        className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                                                        {filteredGames.map((person) => (
-                                                                            <Combobox.Option
-                                                                                key={person.id}
-                                                                                value={person}
-                                                                                className={({active}) =>
-                                                                                    classNames(
-                                                                                        'relative cursor-default select-none py-2 pl-3 pr-9',
-                                                                                        active ? 'bg-indigo-600 text-white' : 'text-gray-900'
-                                                                                    )
-                                                                                }
-                                                                            >
-                                                                                {({active, selected}) => (
-                                                                                    <>
+                                                                    {filteredGames.length > 0 && (
+                                                                        <Combobox.Options
+                                                                            className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                                                            {filteredGames.map((person) => (
+                                                                                <Combobox.Option
+                                                                                    key={person.id}
+                                                                                    value={person}
+                                                                                    className={({active}) =>
+                                                                                        classNames(
+                                                                                            'relative cursor-default select-none py-2 pl-3 pr-9',
+                                                                                            active ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                                                                                        )
+                                                                                    }
+                                                                                >
+                                                                                    {({active, selected}) => (
+                                                                                        <>
                                                                                         <span
                                                                                             className={classNames('block truncate', selected && 'font-semibold')}>{person.name}</span>
 
-                                                                                        {selected && (
-                                                                                            <span
-                                                                                                className={classNames(
-                                                                                                    'absolute inset-y-0 right-0 flex items-center pr-4',
-                                                                                                    active ? 'text-white' : 'text-indigo-600'
-                                                                                                )}
-                                                                                            >
+                                                                                            {selected && (
+                                                                                                <span
+                                                                                                    className={classNames(
+                                                                                                        'absolute inset-y-0 right-0 flex items-center pr-4',
+                                                                                                        active ? 'text-white' : 'text-indigo-600'
+                                                                                                    )}
+                                                                                                >
                         <CheckIcon className="h-5 w-5" aria-hidden="true"/>
                       </span>
-                                                                                        )}
-                                                                                    </>
-                                                                                )}
-                                                                            </Combobox.Option>
-                                                                        ))}
-                                                                    </Combobox.Options>
-                                                                )}
-                                                            </div>
-                                                        </Combobox>
-                                                    </div>
-                                                </div>
-
-                                                <div className="sm:col-span-3">
-                                                    <label htmlFor="country"
-                                                           className="block text-sm font-medium text-gray-700">
-                                                        Country
-                                                    </label>
-                                                    <div className="mt-1">
-                                                        <select
-                                                            id="country"
-                                                            name="country"
-                                                            autoComplete="country-name"
-                                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                        >
-                                                            <option>United States</option>
-                                                            <option>Canada</option>
-                                                            <option>Mexico</option>
-                                                        </select>
+                                                                                            )}
+                                                                                        </>
+                                                                                    )}
+                                                                                </Combobox.Option>
+                                                                            ))}
+                                                                        </Combobox.Options>
+                                                                    )}
+                                                                </div>
+                                                            </Combobox>}
                                                     </div>
                                                 </div>
 
                                                 <div className="sm:col-span-6">
                                                     <label htmlFor="street-address"
-                                                           className="block text-sm font-medium text-gray-700">
-                                                        Street address
-                                                    </label>
+                                                           className="block text-sm font-medium text-gray-700">YouTube
+                                                        Link</label>
                                                     <div className="mt-1">
                                                         <input
-                                                            type="text"
-                                                            name="street-address"
-                                                            id="street-address"
-                                                            autoComplete="street-address"
+                                                            type="url"
+                                                            name="link"
+                                                            id="link"
+                                                            onInput={event => setLink(event.currentTarget.value)}
+                                                            value={link}
                                                             className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                         />
                                                     </div>
                                                 </div>
 
-                                                <div className="sm:col-span-2">
-                                                    <label htmlFor="city"
-                                                           className="block text-sm font-medium text-gray-700">
-                                                        City
-                                                    </label>
-                                                    <div className="mt-1">
-                                                        <input
-                                                            type="text"
-                                                            name="city"
-                                                            id="city"
-                                                            autoComplete="address-level2"
-                                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className="sm:col-span-2">
-                                                    <label htmlFor="region"
-                                                           className="block text-sm font-medium text-gray-700">
-                                                        State / Province
-                                                    </label>
-                                                    <div className="mt-1">
-                                                        <input
-                                                            type="text"
-                                                            name="region"
-                                                            id="region"
-                                                            autoComplete="address-level1"
-                                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className="sm:col-span-2">
-                                                    <label htmlFor="postal-code"
-                                                           className="block text-sm font-medium text-gray-700">
-                                                        ZIP / Postal code
-                                                    </label>
-                                                    <div className="mt-1">
-                                                        <input
-                                                            type="text"
-                                                            name="postal-code"
-                                                            id="postal-code"
-                                                            autoComplete="postal-code"
-                                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                        />
-                                                    </div>
-                                                </div>
                                             </div>
 
                                         </div>
@@ -256,8 +212,16 @@ export default function CreationModal(props: PropTypes) {
                                         className="inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                                         onClick={() => {
                                             //TODO: Add Data
-                                            axios.post("/api/speedrun/create", {}).then(() => {
+                                            console.log(game);
+                                            axios.post("/api/speedrun/create", {
+                                                game: game?._id,
+                                                time: time,
+                                                name: nickname,
+                                                link: link,
+                                            }).then((r) => {
+                                                setMessage({description:r.data.message, icon: <CheckCircleIcon className={"w-8 h-8 text-green-500"}/>, title:"Success"})
                                             }).catch(e => {
+                                                setMessage({description:e.response.data.message, icon: <XCircleIcon className={"w-8 h-8 text-red-500"}/>, title:"Error"})
                                             })
                                             props.setOpen(false)
                                         }}

@@ -4,6 +4,7 @@ import {Bars3Icon, BellIcon, XMarkIcon} from '@heroicons/react/24/outline'
 import {PlusIcon, UserCircleIcon} from '@heroicons/react/20/solid'
 import {signIn, useSession} from "next-auth/react";
 import CreationModal from "./CreationModal";
+import Link from "next/link";
 
 const user = {
     name: 'Tom Cook',
@@ -18,7 +19,7 @@ const navigation = [
     {name: 'Calendar', href: '#', current: false},
 ]
 const userNavigation = [
-    {name: 'Your Profile', href: '#'},
+    {name: 'Your Profile', href: '/profile'},
     {name: 'Settings', href: '#'},
     {name: 'Sign out', href: '/logout'},
 ]
@@ -127,7 +128,7 @@ export default function Navbar() {
                                                         {userNavigation.map((item) => (
                                                             <Menu.Item key={item.name}>
                                                                 {({active}) => (
-                                                                    <a
+                                                                    <Link
                                                                         href={item.href}
                                                                         className={classNames(
                                                                             active ? 'bg-gray-100' : '',
@@ -135,7 +136,7 @@ export default function Navbar() {
                                                                         )}
                                                                     >
                                                                         {item.name}
-                                                                    </a>
+                                                                    </Link>
                                                                 )}
                                                             </Menu.Item>
                                                         ))}
@@ -159,7 +160,7 @@ export default function Navbar() {
                                 {navigation.map((item) => (
                                     <Disclosure.Button
                                         key={item.name}
-                                        as="a"
+                                        as={Link}
                                         href={item.href}
                                         className={classNames(
                                             item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
@@ -194,7 +195,7 @@ export default function Navbar() {
                                         {userNavigation.map((item) => (
                                             <Disclosure.Button
                                                 key={item.name}
-                                                as="a"
+                                                as={Link}
                                                 href={item.href}
                                                 className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                                             >
