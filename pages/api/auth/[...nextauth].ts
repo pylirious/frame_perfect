@@ -6,8 +6,8 @@ import Google from "next-auth/providers/google";
 import {MongoDBAdapter} from "@next-auth/mongodb-adapter";
 import {getMongoClient} from "../../../lib/mongodb";
 
+const mongoClientPromise = getMongoClient()
 export const authOptions = {
-    adapter: MongoDBAdapter(getMongoClient()),
     providers: [
         GithubProvider({
             clientId: process.env.GITHUB_ID,
