@@ -1,16 +1,11 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
 import {Game} from "../../../types/Game";
 import {getMongoClient} from "../../../lib/mongodb";
-import {WithId} from "mongodb";
-
-type ResponseData = {
-    message?: string
-    game?: WithId<Game>
-}
+import {GameId} from "../../../types/Api";
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<ResponseData>
+    res: NextApiResponse<GameId>
 ) {
     if (req.method !== "GET") return res.status(400).json({message: "This API Route is GET-only"})
     if (!req.query.id) return res.status(400).json({message: "Please specify an id"})

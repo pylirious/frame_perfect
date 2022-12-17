@@ -13,7 +13,7 @@ function Speedrun() {
     const {setMessage} = useContext(MessageContext);
     useEffect(() => {
         if (!router.isReady) return;
-        axios.get(`/api/speedrun/${router.query.id}`).then((res: AxiosResponse<WithId<SpeedrunId>>) => {
+        axios.get(`/api/speedrun/${router.query.id}`).then((res: AxiosResponse<SpeedrunId>) => {
             setRun(res.data.speedRun)
         }).catch(e => {
             setMessage({
@@ -23,7 +23,7 @@ function Speedrun() {
             })
         })
 
-    }, [router.isReady])
+    }, [router.isReady, router.query.id, setMessage])
     return (
         <div>{JSON.stringify(run)}</div>
     );

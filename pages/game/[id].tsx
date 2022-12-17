@@ -2,15 +2,23 @@ import React, {useContext, useEffect, useState} from 'react';
 import {useRouter} from "next/router";
 import {Game} from "../../types/Game";
 import {minify} from "next/dist/build/swc";
-import {CalendarIcon, ClockIcon, MapPinIcon, UsersIcon, XCircleIcon} from '@heroicons/react/24/outline';
+import {
+    CalendarIcon,
+    ClockIcon,
+    InformationCircleIcon,
+    MapPinIcon,
+    UsersIcon,
+    XCircleIcon
+} from '@heroicons/react/24/outline';
 import {Speedrun} from "../../types/Speedrun";
 import {WithId} from "mongodb";
 import MessageContext from "../../components/context/MessageContext";
 import {UserIcon} from "@heroicons/react/20/solid";
 import CreationModal from "../../components/CreationModal";
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import ms from 'ms'
 import Link from "next/link";
+import {GameId, GamesAPI, SpeedrunGameId} from "../../types/Api";
 
 function
 
@@ -24,12 +32,19 @@ GameView() {
     const {setMessage} = useContext(MessageContext);
     useEffect(() => {
         if (!router.isReady) return;
-        axios.get(`/api/game/${id}`).then(res => {
+        axios.get(`/api/game/${id}`).then((res: AxiosResponse<GameId>) => {
             console.log("GAME:", res.data);
 
             setGame(res.data.game)
-            axios.get(`/api/speedrun/game/${game?._id}`).then(runs=>{
-                setRecords(runs.data.speedRuns);
+            axios.get(`/api/speedrun/game/${res.data.game?._id}`).then((runs: AxiosResponse<SpeedrunGameId>) => {
+                if (!runs.data.speedRuns)
+                    setMessage({
+                        title: "Info",
+                        icon: <InformationCircleIcon className={"w-8 h-8 text-blue-500"}/>,
+                        description: "No speed-runs found for the game"
+                    })
+                else
+                    setRecords(runs.data.speedRuns);
             }).catch(e => {
                 setMessage({
                     title: "Error",
@@ -45,7 +60,7 @@ GameView() {
                 description: e.response.data.message
             })
         })
-    }, [router.isReady, id])
+    }, [router.isReady, id, setMessage])
 
     return (
         game ?
@@ -72,7 +87,8 @@ GameView() {
                                     <ul role="list" className="divide-y divide-gray-200">
                                         {records?.map((speedrun) => (
                                             <li key={speedrun._id.toString()}>
-                                                <Link href={`/speedrun/${speedrun._id.toString()}`} className="block hover:bg-gray-50">
+                                                <Link href={`/speedrun/${speedrun._id.toString()}`}
+                                                      className="block hover:bg-gray-50">
                                                     <div className="px-4 py-4 sm:px-6">
                                                         <div className="flex items-center justify-between">
                                                             <p className="truncate text-sm font-medium text-indigo-600">{speedrun.name}</p>
