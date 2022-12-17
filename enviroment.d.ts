@@ -5,6 +5,10 @@ declare global {
             GITHUB_SECRET: string;
             REDDIT_ID: string,
             REDDIT_SECRET: string,
+            DISCORD_ID: string,
+            DISCORD_SECRET: string,
+            GOOGLE_ID: string,
+            GOOGLE_SECRET: string,
             NODE_ENV: 'development' | 'production';
             MONGODB_URI: string;
 

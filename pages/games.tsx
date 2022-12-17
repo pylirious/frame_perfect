@@ -5,6 +5,8 @@ import axios, {AxiosResponse} from "axios";
 import {GamesAPI} from "../types/Api";
 import {InformationCircleIcon} from "@heroicons/react/24/outline";
 import MessageContext from "../components/context/MessageContext";
+import {EnvelopeIcon} from '@heroicons/react/20/solid';
+import Link from "next/link";
 
 function Games() {
     const [games, setGames] = useState<WithId<Game>[]>([]);
@@ -22,8 +24,23 @@ function Games() {
         })
     }, [setMessage])
     return (
-        <div>
-            {JSON.stringify(games)}
+        <div className="m-5 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-10 sm:m-20">
+            <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grow">
+                {games.map((game) => (
+                    <li
+                        key={game._id.toString()}
+                        className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
+                    >
+                        <Link href={`/game/${game.id}`}>
+                            <div className="flex flex-1 flex-col p-8">
+                                <img className="mx-auto h-32 w-32 flex-shrink-0 rounded-full" src={game.image} alt=""/>
+                                <h3 className="mt-6 text-sm font-medium text-gray-900">{game.name}</h3>
+
+                            </div>
+                        </Link>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }

@@ -11,10 +11,15 @@ export default async function handler(
 ) {
     if (req.method !== "GET") return res.status(400).json({message: "This API Route is GET-only"})
     let speedRuns = await getSpeedRuns()
+
     if (!speedRuns)
         res.status(200).json({speedRuns: []})
-    else
+    else {
+        speedRuns.sort((a, b) => {
+            return a.time - b.time
+        })
         res.status(200).json({speedRuns})
+    }
 }
 
 const getSpeedRuns: () => Promise<WithId<Speedrun>[]> = async () => {

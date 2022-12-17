@@ -14,6 +14,9 @@ export default async function handler(
     const mongoClient = await getMongoClient()
 
     let query = await mongoClient.db(process.env.DB_NAME).collection<Speedrun>(process.env.RUN_COLLECTION_NAME).find({game: new ObjectId(req.query.id.toString())}).toArray()
+    query.sort((a, b) => {
+        return a.time - b.time
+    })
     if (!query) return res.status(404).json({message: "Game not found"});
     res.status(200).json({speedRuns: query})
 }
