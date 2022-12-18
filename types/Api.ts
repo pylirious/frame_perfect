@@ -1,25 +1,25 @@
 import {WithId} from "mongodb";
-import {Speedrun} from "./Speedrun";
+import {Speedrun, SpeedrunWithUserAndGame} from "./Speedrun"
 import {Game} from "./Game";
 
 export interface SpeedrunId{
     message?: string
-    speedRun?: WithId<Speedrun>
+    speedRun?: SpeedrunWithUserAndGame
 }
 
 export interface SpeedrunGameId{
     message?: string
-    speedRuns?: WithId<Speedrun>[]
+    speedRuns?: Speedrun[]
 }
 export interface SpeedRunsAPI {
     message?: string
-    speedRuns?: WithId<Speedrun>[]
+    speedRuns?: Speedrun[]
 }
 export interface GameId{
     message?: string
-    game?: WithId<Game>
+    game?: Game
 }
 export interface GamesAPI {
     message?: string
-    games?: WithId<Game>[]
+    games?: Game[]
 }

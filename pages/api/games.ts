@@ -3,6 +3,7 @@ import {Game} from "../../types/Game";
 import {getMongoClient} from "../../lib/mongodb";
 import {WithId} from "mongodb";
 import {GamesAPI} from "../../types/Api";
+import {getGames} from "../../prisma/Game";
 
 
 export default async function handler(
@@ -14,8 +15,3 @@ export default async function handler(
     res.status(200).json({games})
 }
 
-const getGames: () => Promise<WithId<Game>[]> = async () => {
-    const mongoClient = await getMongoClient()
-    return  await mongoClient.db(process.env.DB_NAME).collection<Game>(process.env.GAME_COLLECTION_NAME).find().toArray()
-
-}

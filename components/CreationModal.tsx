@@ -13,18 +13,18 @@ import MessageContext from "./context/MessageContext";
 interface PropTypes {
     open: boolean
     setOpen: Dispatch<SetStateAction<boolean>>
-    game?: WithId<Game>
+    game?: Game
 }
 
 
 export default function CreationModal(props: PropTypes) {
     const cancelButtonRef = useRef(null)
-    const [games, setGames] = useState<WithId<Game>[]>([]);
+    const [games, setGames] = useState<Game[]>([]);
     const [time, setTime] = useState<number>();
     const [nickname, setNickname] = useState("");
     const [link, setLink] = useState("");
     const [query, setQuery] = useState('')
-    const [game, setGame] = useState<WithId<Game> | undefined>(props.game);
+    const [game, setGame] = useState<Game | undefined>(props.game);
 
     const {setMessage} = useContext(MessageContext);
 
@@ -214,7 +214,7 @@ export default function CreationModal(props: PropTypes) {
                                             //TODO: Add Data
                                             console.log(game);
                                             axios.post("/api/speedrun/create", {
-                                                game: game?._id,
+                                                game: game?.identifier,
                                                 time: time,
                                                 name: nickname,
                                                 link: link,

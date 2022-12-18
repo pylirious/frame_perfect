@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useRouter} from "next/router";
 import {Game} from "../../types/Game";
-import {minify} from "next/dist/build/swc";
 import {
     CalendarIcon,
     ClockIcon,
@@ -18,25 +17,30 @@ import CreationModal from "../../components/CreationModal";
 import axios, {AxiosResponse} from "axios";
 import ms from 'ms'
 import Link from "next/link";
-import {GameId, GamesAPI, SpeedrunGameId} from "../../types/Api";
+import {GameId, SpeedrunGameId} from "../../types/Api";
 
 function
 
 GameView() {
     const router = useRouter()
     const {id} = router.query;
-    const [game, setGame] = useState<WithId<Game>>();
+    const [game, setGame] = useState<Game>();
     const [open, setOpen] = useState(false);
-    const [records, setRecords] = useState<WithId<Speedrun>[]>([]);
+    const [records, setRecords] = useState<Speedrun[]>([]);
 
     const {setMessage} = useContext(MessageContext);
     useEffect(() => {
         if (!router.isReady) return;
         axios.get(`/api/game/${id}`).then((res: AxiosResponse<GameId>) => {
             console.log("GAME:", res.data);
-
+            if (!res.data.game)
+                return setMessage({
+                    title: "Info",
+                    icon: <InformationCircleIcon className={"w-8 h-8 text-blue-500"}/>,
+                    description: "No speed-runs found for the game"
+                })
             setGame(res.data.game)
-            axios.get(`/api/speedrun/game/${res.data.game?._id}`).then((runs: AxiosResponse<SpeedrunGameId>) => {
+            axios.get(`/api/speedrun/game/${res.data.game?.identifier}`).then((runs: AxiosResponse<SpeedrunGameId>) => {
                 if (!runs.data.speedRuns)
                     setMessage({
                         title: "Info",
@@ -86,8 +90,8 @@ GameView() {
                                 <div className="overflow-hidden bg-white shadow sm:rounded-md">
                                     <ul role="list" className="divide-y divide-gray-200">
                                         {records?.map((speedrun) => (
-                                            <li key={speedrun._id.toString()}>
-                                                <Link href={`/speedrun/${speedrun._id.toString()}`}
+                                            <li key={speedrun.id.toString()}>
+                                                <Link href={`/speedrun/${speedrun.id.toString()}`}
                                                       className="block hover:bg-gray-50">
                                                     <div className="px-4 py-4 sm:px-6">
                                                         <div className="flex items-center justify-between">

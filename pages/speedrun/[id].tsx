@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {WithId} from "mongodb";
-import {Speedrun} from "../../types/Speedrun";
+import { SpeedrunWithUserAndGame} from "../../types/Speedrun";
 import {useRouter} from "next/router";
 import axios, {AxiosResponse} from "axios";
 import {GameId, SpeedrunId} from "../../types/Api";
@@ -11,23 +10,16 @@ import {Game} from "../../types/Game";
 import ms from "ms";
 
 function Speedrun() {
-    const [run, setRun] = useState<WithId<Speedrun>>();
-    const [game, setGame] = useState<WithId<Game>>();
+    const [run, setRun] = useState<SpeedrunWithUserAndGame>();
+    const [game, setGame] = useState<Game>();
     const router = useRouter()
     const {setMessage} = useContext(MessageContext);
     useEffect(() => {
         if (!router.isReady) return;
         axios.get(`/api/speedrun/${router.query.id}`).then((res: AxiosResponse<SpeedrunId>) => {
             setRun(res.data.speedRun)
-            axios.get(`/api/game/${res.data.speedRun?.game.toString()}`).then((res: AxiosResponse<GameId>) => {
-                setGame(res.data.game)
-            }).catch(e => {
-                setMessage({
-                    title: "Error",
-                    icon: <XCircleIcon className={"w-8 h-8 text-red-500"}/>,
-                    description: e.response.data.message
-                })
-            })
+            console.log(res.data.speedRun);
+            setGame(res.data.speedRun?.game)
         }).catch(e => {
             setMessage({
                 title: "Error",

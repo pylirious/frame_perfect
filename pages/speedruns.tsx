@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {ObjectId, WithId} from "mongodb";
 import {Game} from "../types/Game";
-import {Speedrun} from "../types/Speedrun";
+import {Speedrun} from "../types/Speedrun"
 import axios, {AxiosResponse} from "axios";
 import {GamesAPI, SpeedRunsAPI} from "../types/Api";
 import MessageContext from "../components/context/MessageContext";
@@ -11,8 +11,8 @@ import Link from "next/link";
 
 function Games() {
     const {setMessage} = useContext(MessageContext);
-    const [runs, setRuns] = useState<WithId<Speedrun>[]>([]);
-    const [games, setGames] = useState<WithId<Game>[]>([]);
+    const [runs, setRuns] = useState<Speedrun[]>([]);
+    const [games, setGames] = useState<Game[]>([]);
     useEffect(() => {
         axios.get("/api/speedruns").then((res: AxiosResponse<SpeedRunsAPI>) => {
             if (!res.data.speedRuns)
@@ -79,16 +79,16 @@ function Games() {
                                 </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200 bg-white">
-                                {runs.map((run) => (
-                                    <tr key={run._id.toString()}>
+                                {runs.map((run:Speedrun) => (
+                                    <tr key={run.id.toString()}>
                                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                                             {run.name}
                                         </td>
                                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{ms(run.time)}</td>
                                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{run.user.name}</td>
-                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{games.find(g => g._id === run.game)?.name}</td>
+                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{games.find(g => g.identifier === run.gameId)?.name}</td>
                                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                            <Link href={`/speedrun/${run._id.toString()}`} className="text-indigo-600 hover:text-indigo-900">
+                                            <Link href={`/speedrun/${run.id.toString()}`} className="text-indigo-600 hover:text-indigo-900">
                                                 View Run<span className="sr-only">,{run.name}</span>
                                             </Link>
                                         </td>
