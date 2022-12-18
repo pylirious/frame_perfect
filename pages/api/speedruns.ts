@@ -4,6 +4,7 @@ import {getMongoClient} from "../../lib/mongodb";
 import {WithId} from "mongodb";
 import {Speedrun} from "../../types/Speedrun";
 import {SpeedRunsAPI} from "../../types/Api";
+import {getSpeedRuns} from "../../prisma/Speedrun";
 
 export default async function handler(
     req: NextApiRequest,
@@ -11,19 +12,7 @@ export default async function handler(
 ) {
     if (req.method !== "GET") return res.status(400).json({message: "This API Route is GET-only"})
     let speedRuns = await getSpeedRuns()
-
-    if (!speedRuns)
-        res.status(200).json({speedRuns: []})
-    else {
-        speedRuns.sort((a, b) => {
-            return a.time - b.time
-        })
-        res.status(200).json({speedRuns})
-    }
-}
-
-const getSpeedRuns: () => Promise<WithId<Speedrun>[]> = async () => {
-    const mongoClient = await getMongoClient()
-    return await mongoClient.db(process.env.DB_NAME).collection<Speedrun>(process.env.RUN_COLLECTION_NAME).find().toArray()
+    res.status(200).json({speedRuns})
 
 }
+

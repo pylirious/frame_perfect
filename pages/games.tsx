@@ -9,7 +9,7 @@ import {EnvelopeIcon} from '@heroicons/react/20/solid';
 import Link from "next/link";
 
 function Games() {
-    const [games, setGames] = useState<WithId<Game>[]>([]);
+    const [games, setGames] = useState<Game[]>([]);
     const {setMessage} = useContext(MessageContext);
     useEffect(() => {
         axios.get("/api/games").then((res: AxiosResponse<GamesAPI>) => {
@@ -25,15 +25,18 @@ function Games() {
     }, [setMessage])
     return (
         <div className="m-5 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-10 sm:m-20">
-            <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grow">
+            <h3 className="text-2xl font-medium leading-6 text-gray-900">Games</h3>
+            <p className="mt-1 max-w-2xl text-sm text-gray-500">Select a game below</p>
+            <ul role="list" className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grow">
                 {games.map((game) => (
                     <li
-                        key={game._id.toString()}
+                        key={game.identifier}
                         className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
                     >
                         <Link href={`/game/${game.id}`}>
                             <div className="flex flex-1 flex-col p-8">
-                                <img className="mx-auto h-32 w-32 flex-shrink-0 rounded-full" src={game.image} alt=""/>
+                                <img className="mx-auto h-32 w-32 flex-shrink-0 rounded-md"
+                                     src={game.image ? game.image : undefined} alt=""/>
                                 <h3 className="mt-6 text-sm font-medium text-gray-900">{game.name}</h3>
 
                             </div>
