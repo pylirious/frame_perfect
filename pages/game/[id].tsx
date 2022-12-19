@@ -2,27 +2,27 @@ import React, {useContext, useEffect, useState} from 'react';
 import {useRouter} from "next/router";
 import {Game} from "../../types/Game";
 import {ClockIcon, InformationCircleIcon, XCircleIcon} from '@heroicons/react/24/outline';
-import {SpeedRunWithUserGameAndApproval} from "../../types/Speedrun";
 import MessageContext from "../../components/context/MessageContext";
 import {UserIcon} from "@heroicons/react/20/solid";
 import CreationModal from "../../components/CreationModal";
 import axios, {AxiosResponse} from "axios";
 import ms from 'ms'
 import Link from "next/link";
-import {GameId, SpeedrunGameId} from "../../types/Api";
+import {GameId} from "../../types/Api";
 import {Switch} from "@headlessui/react";
 import {classNames} from "../../utils";
-import {getSession} from "next-auth/react";
 
 function GameView() {
     const router = useRouter()
     const {id} = router.query;
     const [game, setGame] = useState<Game>();
     const [open, setOpen] = useState(false);
-    const [records, setRecords] = useState<SpeedRunWithUserGameAndApproval[]>([]);
     const [onlyVerified, setOnlyVerified] = useState(false);
 
     const {setMessage} = useContext(MessageContext);
+    /*
+    Once the router is loaded/ready the data of the game is fetchted
+     */
     useEffect(() => {
         if (!router.isReady) return;
         axios.get(`/api/game/${id}`).then((res: AxiosResponse<GameId>) => {
@@ -33,23 +33,6 @@ function GameView() {
                     description: "No speed-runs found for the game"
                 })
             setGame(res.data.game)
-            axios.get(`/api/speedrun/game/${res.data.game?.identifier}`).then((runs: AxiosResponse<SpeedrunGameId>) => {
-                if (!runs.data.speedRuns)
-                    setMessage({
-                        title: "Info",
-                        icon: <InformationCircleIcon className={"w-8 h-8 text-blue-500"}/>,
-                        description: "No speed-runs found for the game"
-                    })
-                else
-                    setRecords(runs.data.speedRuns);
-            }).catch(e => {
-                setMessage({
-                    title: "Error",
-                    icon: <XCircleIcon className={"w-8 h-8 text-red-500"}/>,
-                    description: e.response.data.message
-                })
-            })
-
         }).catch(e => {
             setMessage({
                 title: "Error",
@@ -104,7 +87,7 @@ function GameView() {
                             <div className="mt-5">
                                 <div className="overflow-hidden bg-white shadow sm:rounded-md">
                                     <ul role="list" className="divide-y divide-gray-200">
-                                        {(onlyVerified ? records.filter(r => r.Approval.length !== 0) : records)?.map((speedRun) => (
+                                        {(onlyVerified ? game.Speedrun.filter(r => r.Approval.length !== 0) : game.Speedrun)?.map((speedRun) => (
                                             <li key={speedRun.id.toString()}>
                                                 <Link href={`/speedrun/${speedRun.id.toString()}`}
                                                       className="block hover:bg-gray-50">

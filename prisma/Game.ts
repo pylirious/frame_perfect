@@ -1,9 +1,9 @@
 import prisma from "../lib/prisma";
-import {Game} from "../types/Game";
 
 export const getGameByID = async (id: string) => {
     return await prisma.game.findUnique({
-        where: {identifier: id}
+        where: {identifier: id},
+        include: {Speedrun: {include: {user: true, Approval: true}}}
     })
 }
 
@@ -13,11 +13,12 @@ export const getGames = async () => {
 
 export const getGameByName = async (id: string) => {
     return await prisma.game.findUnique({
-        where: {id: id}
+        where: {id: id},
+        include: {Speedrun: {include: {user: true, Approval: true}}}
     })
 }
 
-export const createGame = async (game: Game) => {
+export const createGame = async (game: { name: string, id: string, image: string, }) => {
     return await prisma.game.create({
         data: game
     })

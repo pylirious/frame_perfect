@@ -3,6 +3,11 @@ import {GamesAPI} from "../../types/Api";
 import {getGames} from "../../prisma/Game";
 
 
+/**
+ * Gets all games saved in the database.
+ * @param req
+ * @param res
+ */
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<GamesAPI>

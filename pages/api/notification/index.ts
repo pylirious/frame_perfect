@@ -3,6 +3,12 @@ import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "../auth/[...nextauth]";
 import {getNotificationsOfUser} from "../../../prisma/Notification";
 
+/**
+ * Get the notifications of the current logged-in user
+ *
+ * @param req
+ * @param res
+ */
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse

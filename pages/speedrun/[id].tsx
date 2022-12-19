@@ -10,7 +10,7 @@ import {
     XCircleIcon
 } from "@heroicons/react/24/outline";
 import MessageContext from "../../components/context/MessageContext";
-import {Game} from "../../types/Game";
+import {Game} from "@prisma/client";
 import ms from "ms";
 import {useSession} from "next-auth/react";
 import {Dialog, Transition} from '@headlessui/react'

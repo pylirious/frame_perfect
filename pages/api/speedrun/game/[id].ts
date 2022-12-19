@@ -2,6 +2,11 @@ import {NextApiRequest, NextApiResponse} from "next";
 import {SpeedrunGameId} from "../../../../types/Api";
 import {getSpeedRunsByGame} from "../../../../prisma/Speedrun";
 
+/**
+ * Get all the speed-runs of a specific game. These include the whole User, Game and Approval object.
+ * @param req
+ * @param res
+ */
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<SpeedrunGameId>

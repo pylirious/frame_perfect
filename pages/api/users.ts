@@ -1,14 +1,14 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {Game} from "../../types/Game";
-import {getMongoClient} from "../../lib/mongodb";
-import {WithId} from "mongodb";
-import {Speedrun} from "../../types/Speedrun";
-import {SpeedRunsAPI, UsersApi} from "../../types/Api";
-import {getSpeedRuns} from "../../prisma/Speedrun";
+import {UsersApi} from "../../types/Api";
 import {getUsers} from "../../prisma/Users";
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "./auth/[...nextauth]";
 
+/**
+ * Get all users. For data protection reasons only moderators can access this endpoint
+ * @param req
+ * @param res
+ */
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<UsersApi>

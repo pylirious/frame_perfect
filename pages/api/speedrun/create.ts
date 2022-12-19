@@ -2,7 +2,13 @@ import type {NextApiRequest, NextApiResponse} from 'next'
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "../auth/[...nextauth]";
 import {createSpeedRun} from "../../../prisma/Speedrun";
+import {getMongoClient} from '../../../lib/mongodb';
 
+/**
+ * Creates a new speedrun. The user mus be loggen in so the speedrun can be associated with the current user. A game, time, link and name must be passed via the POST request.
+ * @param req
+ * @param res
+ */
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse

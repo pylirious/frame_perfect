@@ -3,6 +3,13 @@ import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "../auth/[...nextauth]";
 import {createNotification} from "../../../prisma/Notification";
 
+/**
+ * Creates a new Notification for a user. If the user sending the request is a Moderator they may create a notification
+ * for anyone. Else the user is only able to create a notification for themselves.
+ * You need to pass a userId, a title and a description in the body of the POST request
+ * @param req
+ * @param res
+ */
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse

@@ -3,6 +3,12 @@ import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "../auth/[...nextauth]";
 import {getNotificationByID, getNotificationsOfUser, markNotificationAsRead} from "../../../prisma/Notification";
 
+/**
+ * Marks a notification as read. Only moderators may mark notifications of other users as read.
+ *
+ * @param req
+ * @param res
+ */
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
