@@ -1,7 +1,4 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {Game} from "../../types/Game";
-import {getMongoClient} from "../../lib/mongodb";
-import {WithId} from "mongodb";
 import {GamesAPI} from "../../types/Api";
 import {getGames} from "../../prisma/Game";
 

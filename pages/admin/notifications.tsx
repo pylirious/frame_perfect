@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {User} from "@prisma/client";
 import axios, {AxiosResponse} from "axios";
 import {UsersApi} from "../../types/Api";
@@ -7,7 +7,8 @@ import {WithId} from "mongodb";
 import {Game} from "../../types/Game";
 import {CheckIcon, ChevronUpDownIcon} from "@heroicons/react/20/solid";
 import {classNames} from "../../utils";
-import {XCircleIcon} from "@heroicons/react/24/outline";
+import MessageContext from "../../components/context/MessageContext";
+import {CheckCircleIcon, XCircleIcon} from "@heroicons/react/24/outline";
 
 function Notifications() {
     const [users, setUsers] = useState<User[]>([]);
@@ -15,6 +16,8 @@ function Notifications() {
     const [query, setQuery] = useState("");
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+
+    const {setMessage} = useContext(MessageContext);
 
     const filteredUsers =
         query === ''
@@ -136,18 +139,18 @@ function Notifications() {
                             description
                         }).then((r) => {
                             console.log(r.data);
-                            /*setMessage({
+                            setMessage({
                                 description: r.data.message,
                                 icon: <CheckCircleIcon className={"w-8 h-8 text-green-500"}/>,
                                 title: "Success"
-                            })*/
+                            })
                         }).catch(e => {
                             console.log(e);
-                            /*setMessage({
+                            setMessage({
                                 description: e.response.data.message,
                                 icon: <XCircleIcon className={"w-8 h-8 text-red-500"}/>,
                                 title: "Error"
-                            })*/
+                            })
                         })
                     }}
                 >

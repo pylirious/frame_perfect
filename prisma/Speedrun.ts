@@ -26,7 +26,7 @@ export const getSpeedRunsByGame = async (id: string) => {
 }
 
 export const getSpeedRuns = async () => {
-    return await prisma.speedrun.findMany({include: {user: true}})
+    return await prisma.speedrun.findMany({include: {Approval: true, user: {select: {name: true, id: true}}}})
 }
 
 

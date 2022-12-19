@@ -1,10 +1,6 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {Speedrun} from "../../../types/Speedrun";
-import {getSession} from "next-auth/react";
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "../auth/[...nextauth]";
-import {getMongoClient} from "../../../lib/mongodb";
-import {ObjectId} from "mongodb";
 import {createSpeedRun} from "../../../prisma/Speedrun";
 
 export default async function handler(

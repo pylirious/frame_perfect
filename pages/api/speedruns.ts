@@ -1,8 +1,4 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {Game} from "../../types/Game";
-import {getMongoClient} from "../../lib/mongodb";
-import {WithId} from "mongodb";
-import {Speedrun} from "../../types/Speedrun";
 import {SpeedRunsAPI} from "../../types/Api";
 import {getSpeedRuns} from "../../prisma/Speedrun";
 

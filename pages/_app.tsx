@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import type {AppProps} from 'next/app'
-import {SessionProvider, SessionProviderProps} from "next-auth/react";
+import {SessionProvider} from "next-auth/react";
 import Navbar from "../components/Navbar";
 import MessageContext from "../components/context/MessageContext";
 import {useState} from "react";

@@ -1,11 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {WithId} from "mongodb";
 import {Game} from "../types/Game";
 import axios, {AxiosResponse} from "axios";
 import {GamesAPI} from "../types/Api";
 import {InformationCircleIcon} from "@heroicons/react/24/outline";
 import MessageContext from "../components/context/MessageContext";
-import {EnvelopeIcon} from '@heroicons/react/20/solid';
 import Link from "next/link";
 
 function Games() {

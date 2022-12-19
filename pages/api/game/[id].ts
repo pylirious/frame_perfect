@@ -1,8 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {Game} from "../../../types/Game";
-import {getMongoClient} from "../../../lib/mongodb";
 import {GameId} from "../../../types/Api";
-import {ObjectId} from "mongodb";
 import {getGameByID, getGameByName} from "../../../prisma/Game";
 
 /**
@@ -24,7 +21,7 @@ export default async function handler(
     let query;
     query = await getGameByName(req.query.id.toString())
     if (!query)
-            query = await getGameByID(req.query.id.toString())
+        query = await getGameByID(req.query.id.toString())
 
     if (!query) return res.status(404).json({message: "Game not found"});
     res.status(200).json({game: query})

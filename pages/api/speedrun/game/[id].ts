@@ -1,9 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import {SpeedrunGameId} from "../../../../types/Api";
-import {getMongoClient} from "../../../../lib/mongodb";
-import {Speedrun} from "../../../../types/Speedrun";
-import {ObjectId} from "mongodb";
-import {Game} from "../../../../types/Game";
 import {getSpeedRunsByGame} from "../../../../prisma/Speedrun";
 
 export default async function handler(

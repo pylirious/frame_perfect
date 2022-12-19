@@ -1,5 +1,5 @@
 import {WithId} from "mongodb";
-import {Speedrun, SpeedRunWithUserGameAndApproval, SpeedrunWithUserAndGame} from "./Speedrun"
+import {Speedrun, SpeedRunWithUserGameAndApproval, SpeedrunWithUserAndGame, SpeedrunWithUserNameAndApproval} from "./Speedrun"
 import {Game} from "./Game";
 import {User} from "@prisma/client";
 
@@ -14,7 +14,7 @@ export interface SpeedrunGameId{
 }
 export interface SpeedRunsAPI {
     message?: string
-    speedRuns?: Speedrun[]
+    speedRuns?: SpeedrunWithUserNameAndApproval[]
 }
 export interface UsersApi {
     message?: string
