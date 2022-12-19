@@ -1,5 +1,4 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {initGames} from "../../lib/init";
 
 export default async function handler(
     req: NextApiRequest,

@@ -1,5 +1,8 @@
+import {ObjectId} from "mongodb";
+
 export interface Game{
     name: string,
     id: string,
-    image?: string,
+    identifier?: string
+    image?: string|null,
 }

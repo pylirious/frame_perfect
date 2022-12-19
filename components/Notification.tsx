@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import {Fragment, useContext, useState} from 'react'
+import {Fragment, useContext, useEffect, useState} from 'react'
 import {Transition} from '@headlessui/react'
 import MessageContext from "./context/MessageContext";
 import {XCircleIcon} from "@heroicons/react/24/outline";
@@ -10,6 +10,11 @@ export default function Notification(props: { message: MessageType }) {
     const [show, setShow] = useState(true)
     const {title, description, icon} = props.message;
     const {setMessage} = useContext(MessageContext)
+    useEffect(()=> {
+        setTimeout(()=>{
+            setShow(false)
+        }, 10000)
+    })
     return (
         <>
             {/* Global notification live region, render this permanently at the end of the document */}
