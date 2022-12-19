@@ -182,11 +182,17 @@ function Speedrun() {
                                         speedRunId: run.id,
                                         approvedById: session.user.id,
                                     }).then(res => {
-                                        setMessage({
-                                            description: res.data.message,
-                                            icon: <CheckCircleIcon className={"w-8 h-8 text-green-500"}/>,
-                                            title: "Success"
-                                        })
+                                        axios.post("/api/notification/create", {
+                                            userId: run.userId,
+                                            title: "Run verified",
+                                            description: `Your run for ${run.game.name} was verified!`
+                                        }).then(() =>
+                                            setMessage({
+                                                description: res.data.message,
+                                                icon: <CheckCircleIcon className={"w-8 h-8 text-green-500"}/>,
+                                                title: "Success"
+                                            }))
+                                        router.reload()
                                     })
                                 }}
                                 className={classNames(run.Approval.length !== 0 ? "ml-5 cursor-not-allowed relative inline-flex items-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" : "ml-5 relative inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2")}

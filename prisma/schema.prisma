@@ -87,10 +87,11 @@ model Approval {
 }
 
 model Notification {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId      String
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String   @db.ObjectId
   title       String
   description String
-  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  read        Boolean @default(false)
+  created     DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  read        Boolean  @default(false)
 }
