@@ -1,9 +1,28 @@
 import React from 'react';
-import {useSession} from "next-auth/react";
+import {signIn, useSession} from "next-auth/react";
 import Head from "next/head";
 
 function Profile() {
     const {data: session} = useSession(), user = session?.user;
+
+
+    if (!session || !session.user) {
+        return <>
+            <Head>
+                <title>Profil</title>
+            </Head>
+            <div className={"m-5 bg-white shadow px-4 py-5 sm:rounded-lg sm:px-10 sm:m-20 flex flex-col"}>
+                <div>
+                    <button
+                        type="button"
+                        onClick={() => signIn()}
+                        className="relative inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    >Login
+                    </button>
+                </div>
+            </div>
+        </>
+    }
     return (<>
         <Head>
             <title>Profil</title>
@@ -22,10 +41,13 @@ function Profile() {
                         <dd className="mt-1 text-sm text-gray-900">{user?.name}</dd>
                     </div>
                     <div className="sm:col-span-1">
-                        <dt className="text-sm font-medium text-gray-500">E-Mail Adresse</dt>
+                        <dt className="text-sm font-medium text-gray-500">E-Mail</dt>
                         <dd className="mt-1 text-sm text-gray-900">{user?.email}</dd>
                     </div>
-
+                    <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Role</dt>
+                        <dd className="mt-1 text-sm text-gray-900">{user?.role}</dd>
+                    </div>
                 </dl>
             </div>
         </div>

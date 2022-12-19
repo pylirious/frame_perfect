@@ -1,4 +1,5 @@
-import NextAuth, { DefaultSession } from "next-auth"
+import {DefaultSession} from "next-auth"
+import {Notification} from "@prisma/client"
 
 declare module "next-auth" {
     /**
@@ -6,8 +7,13 @@ declare module "next-auth" {
      */
     interface Session {
         user: {
-            /** The user's postal address. */
             id: string
+            role: "Moderator" | "Runner",
+            notification: Notification[]
         } & DefaultSession["user"]
+    }
+    interface User{
+        role: "Moderator" | "Runner",
+        Notification: Notification[]
     }
 }

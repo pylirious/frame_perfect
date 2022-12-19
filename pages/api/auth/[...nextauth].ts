@@ -1,12 +1,14 @@
-import NextAuth, {Session, User} from "next-auth"
+import NextAuth, {Session} from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 import Reddit from "next-auth/providers/reddit";
 import Discord from "next-auth/providers/discord";
 import Google from "next-auth/providers/google";
-import {MongoDBAdapter} from "@next-auth/mongodb-adapter";
 import {getMongoClient} from "../../../lib/mongodb";
 import {PrismaAdapter} from "@next-auth/prisma-adapter";
 import prisma from "../../../lib/prisma";
+import {AdapterUser} from "next-auth/adapters";
+import {JWT} from "next-auth/jwt";
+import {User} from "next-auth/core/types";
 
 const mongoClientPromise = getMongoClient()
 export const authOptions = {
@@ -30,8 +32,17 @@ export const authOptions = {
         })
     ],
     callbacks: {
-        async session({session, token, user}: { session: Session, token: any, user: any }) {
-            (session.user as any).id = user.id;
+        async session({session, token, user}: {
+            session: Session;
+            user: User | AdapterUser;
+            token: JWT;
+        }) {
+            console.table(session.user);
+            console.table(user);
+            console.table(token)
+            session.user.id = user.id;
+            session.user.role = user.role;
+            session.user.notification = user.Notification
             return session;
         },
     },
