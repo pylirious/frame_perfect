@@ -13,8 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         console.log(query);
         res.status(200).json({message: "Speedrun delete successfully."})
     } else {
-        return res.status(405).json({message: "This API Route is GET-only"})
-
+        return res.status(405).json({message: "This API Route is GET/DELETE-only"})
     }
 }
 

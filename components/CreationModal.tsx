@@ -8,6 +8,7 @@ import {classNames} from "../utils";
 import {CheckIcon, ChevronUpDownIcon} from "@heroicons/react/20/solid";
 import {Combobox} from '@headlessui/react'
 import MessageContext from "./context/MessageContext";
+import {useRouter} from "next/router";
 
 
 interface PropTypes {
@@ -27,7 +28,7 @@ export default function CreationModal(props: PropTypes) {
     const [game, setGame] = useState<Game | undefined>(props.game);
 
     const {setMessage} = useContext(MessageContext);
-
+    const router = useRouter()
     const filteredGames =
         query === ''
             ? games
