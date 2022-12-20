@@ -33,3 +33,4 @@ You now may visit http://localhost:3000/api/init in order to add all the games t
 9. As Moderator: Approve/Verify runs [/speedrun/[id]](http://localhost:3000/speedrun/)
 10. As Moderator: Delete any run [/speedrun/[id]](http://localhost:3000/speedrun/)
 11. As Runner: Delete your own run [/speedrun/[id]](http://localhost:3000/speedrun/)
+12. As Moderator: Send notifications to any user [/admin/notifications](http://localhost:3000/admin/notifications/)
