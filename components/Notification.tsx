@@ -10,11 +10,7 @@ export default function Notification(props: { message: MessageType }) {
     const [show, setShow] = useState(true)
     const {title, description, icon} = props.message;
     const {setMessage} = useContext(MessageContext)
-    useEffect(()=> {
-        setTimeout(()=>{
-            setShow(false)
-        }, 10000)
-    })
+
     return (
         <>
             {/* Global notification live region, render this permanently at the end of the document */}
