@@ -15,7 +15,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         res.status(200).json({speedRun: query})
     } else if (req.method === "DELETE") {
         let query = await deleteSpeedRunByID(req.query.id.toString())
-        console.log(query);
         res.status(200).json({message: "Speedrun delete successfully."})
     } else {
         return res.status(405).json({message: "This API Route is GET/DELETE-only"})

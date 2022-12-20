@@ -132,20 +132,18 @@ function Notifications() {
                     className="inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => {
                         if (!user)
-                            return console.log("no user");
+                            return;
                         axios.post("/api/notification/create", {
                             userId: user.id,
                             title,
                             description
                         }).then((r) => {
-                            console.log(r.data);
                             setMessage({
                                 description: r.data.message,
                                 icon: <CheckCircleIcon className={"w-8 h-8 text-green-500"}/>,
                                 title: "Success"
                             })
                         }).catch(e => {
-                            console.log(e);
                             setMessage({
                                 description: e.response.data.message,
                                 icon: <XCircleIcon className={"w-8 h-8 text-red-500"}/>,

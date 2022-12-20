@@ -87,9 +87,7 @@ export const authOptions = {
             user: User | AdapterUser;
             token: JWT;
         }) {
-            console.table(session.user);
-            console.table(user);
-            console.table(token)
+
             session.user.id = user.id;
             session.user.role = user.role;
             session.user.notification = user.Notification
