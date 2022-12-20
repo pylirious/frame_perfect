@@ -51,7 +51,7 @@ function GameView() {
                     <title>{game.name}</title>
                 </Head>
                 <CreationModal open={open} setOpen={setOpen} game={game}/>
-                <div className="bg-gray-700">
+                <div className="bg-gray-700 h-[100vh]">
                     <div className="p-20">
                         <div className="border-b rounded-md border-blue-500 bg-blue-400 px-4 py-5 sm:px-6">
                             <div className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">

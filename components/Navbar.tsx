@@ -34,7 +34,7 @@ export default function Navbar() {
 
     return <div>
         <CreationModal open={open} setOpen={setOpen}/>
-        <Disclosure as="nav" className="bg-gray-800">
+        <Disclosure as="nav" className="bg-gray-800 fixed w-full top-0 z-50">
             {({open}) => <>
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
