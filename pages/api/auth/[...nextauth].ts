@@ -37,7 +37,7 @@ export function PrismaAdapter(p: PrismaClient): Adapter {
             const account = await p.account.findUnique({where: {provider_providerAccountId}, select: {user: true}});
             return account?.user ?? null
         },
-        getUserByEmail: (email) => p.user.findUnique({where: {email}, include: {Notification: true}}),
+        getUserByEmail: (email) => p.user.findFirst({where: {email}, include: {Notification: true}}),
         linkAccount: (data) => p.account.create({data}) as any,
         unlinkAccount: (provider_providerAccountId) => p.account.delete({where: {provider_providerAccountId}}) as any,
         updateSession: (data) =>
@@ -61,22 +61,22 @@ export const authOptions = {
     adapter: PrismaAdapter(prisma),
     providers: [
         GithubProvider({
-            id:"github",
+            id: "github",
             clientId: process.env.GITHUB_ID,
             clientSecret: process.env.GITHUB_SECRET,
         }),
         Reddit({
-            id:"reddit",
+            id: "reddit",
             clientId: process.env.REDDIT_ID,
             clientSecret: process.env.REDDIT_SECRET
         }),
         Discord({
-            id:"discord",
+            id: "discord",
             clientId: process.env.DISCORD_ID,
             clientSecret: process.env.DISCORD_SECRET
         }),
         Google({
-            id:"google",
+            id: "google",
             clientId: process.env.GOOGLE_ID,
             clientSecret: process.env.GOOGLE_SECRET
         })
