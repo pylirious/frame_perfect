@@ -22,8 +22,6 @@ export default function Navbar() {
         name: 'Records', href: '/speedruns', current: router.pathname.startsWith("/speedruns")
     }, {
         name: 'Games', href: '/games', current: router.pathname.startsWith("/games")
-    }, {
-        name: 'Calendar', href: '#', current: router.pathname === "/"
     },]
 
     const {data: session} = useSession()
