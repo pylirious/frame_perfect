@@ -1,7 +1,6 @@
 import type {NextPage} from 'next'
 import {ChevronRightIcon} from '@heroicons/react/20/solid'
 import {signIn} from "next-auth/react";
-import Discord from "next-auth/providers/discord";
 import Head from "next/head";
 
 
@@ -74,7 +73,7 @@ const Home: NextPage = () => {
                                             <div className="mt-1 grid grid-cols-4 gap-3">
                                                 <div>
                                                     <button
-                                                        onClick={()=> signIn("discord")}
+                                                        onClick={() => signIn("discord")}
                                                         className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                                                     >
                                                         <span className="sr-only">Sign in with Discord</span>
@@ -89,7 +88,7 @@ const Home: NextPage = () => {
 
                                                 <div>
                                                     <button
-                                                        onClick={()=> signIn("reddit")}
+                                                        onClick={() => signIn("reddit")}
                                                         className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                                                     >
                                                         <span className="sr-only">Sign in with Reddit</span>
@@ -106,7 +105,7 @@ const Home: NextPage = () => {
 
                                                 <div>
                                                     <button
-                                                        onClick={()=> signIn("github")}
+                                                        onClick={() => signIn("github")}
                                                         className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                                                     >
                                                         <span className="sr-only">Sign in with GitHub</span>
@@ -122,7 +121,7 @@ const Home: NextPage = () => {
                                                 </div>
                                                 <div>
                                                     <button
-                                                        onClick={()=> signIn("google")}
+                                                        onClick={() => signIn("google")}
                                                         className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                                                     >
                                                         <span className="sr-only">Sign in with Google</span>
@@ -140,7 +139,8 @@ const Home: NextPage = () => {
                                     </div>
                                     <div className="border-t-2 border-gray-200 bg-gray-50 px-4 py-6 sm:px-10">
                                         <p className="text-xs leading-5 text-gray-500">
-                                            To browse you don't need an account. We cannot view your Password or any more information than your username and your e-mail
+                                            To browse you don't need an account. We cannot view your Password or any
+                                            more information than your username and your e-mail
                                         </p>
                                     </div>
                                 </div>

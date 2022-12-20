@@ -8,7 +8,7 @@ export const getGameByID = async (id: string) => {
 }
 
 export const getGames = async () => {
-    return await prisma.game.findMany()
+    return await prisma.game.findMany({include: {Speedrun: {include: {user: true, Approval: true}}}})
 }
 
 export const getGameByName = async (id: string) => {
