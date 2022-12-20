@@ -11,7 +11,7 @@ function Profile() {
             <Head>
                 <title>Profil</title>
             </Head>
-            <div className={"m-5 bg-white shadow px-4 py-5 sm:rounded-lg sm:px-10 sm:m-20 flex flex-col"}>
+            <div className={"m-5 bg-white shadow px-4 py-24 sm:rounded-lg sm:px-10 sm:m-10 flex flex-row justify-center"}>
                 <div>
                     <button
                         type="button"
@@ -27,7 +27,7 @@ function Profile() {
         <Head>
             <title>Profile</title>
         </Head>
-        <div className={"m-5 bg-white shadow px-4 py-5 sm:rounded-lg sm:px-10 sm:m-20 flex flex-col"}>
+        <div className={"m-5 bg-white shadow px-4 py-24 sm:rounded-lg sm:px-10 sm:m-20 flex flex-col"}>
             <div
                 className="px-4 py-5 sm:px-6 flex flex-row max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
                 <h2 id="applicant-information-title"

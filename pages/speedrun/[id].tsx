@@ -128,7 +128,7 @@ function Speedrun() {
                     </div>
                 </Dialog>
             </Transition.Root>
-            <div className="m-5 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-10 sm:m-20">
+            <div className="m-5 bg-white shadow px-4 py-24 sm:rounded-lg sm:p-10 sm:m-20">
                 <div className="px-4 py-5 sm:px-6">
                     <h3 className="text-lg font-medium leading-6 text-gray-900">Speedrun Details</h3>
                     <p className="mt-1 max-w-2xl text-sm text-gray-500">Personal details and application.</p>

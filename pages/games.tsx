@@ -27,7 +27,7 @@ function Games() {
             <Head>
                 <title>Games</title>
             </Head>
-            <div className="m-5 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-10 sm:m-20">
+            <div className="m-5 bg-white shadow px-4 py-24 sm:rounded-lg sm:p-10 sm:m-20">
                 <h3 className="text-2xl font-medium leading-6 text-gray-900">Games</h3>
                 <p className="mt-1 max-w-2xl text-sm text-gray-500">Select a game below</p>
                 <ul role="list"

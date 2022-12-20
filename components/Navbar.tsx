@@ -10,7 +10,7 @@ import axios from "axios";
 import {classNames} from "../utils";
 import {Notification} from "@prisma/client";
 
-const userNavigation = [{name: 'Your Profile', href: '/profile'}, {name: 'Settings', href: '#'}, {
+const userNavigation = [{name: 'Your Profile', href: '/profile'}, {
     name: 'Sign out', href: '/logout'
 },]
 
@@ -49,16 +49,18 @@ export default function Navbar() {
                                 </Disclosure.Button>
                             </div>
                             <div className="flex flex-shrink-0 items-center">
-                                <img
-                                    className="block h-8 w-auto lg:hidden"
-                                    src="/logo.png"
-                                    alt="Your Company"
-                                />
-                                <img
-                                    className="hidden h-8 w-auto lg:block"
-                                    src="/logo.png"
-                                    alt="Your Company"
-                                />
+                                <Link href={"/"}>
+                                    <img
+                                        className="block h-8 w-auto lg:hidden"
+                                        src="/logo.png"
+                                        alt="Your Company"
+                                    />
+                                    <img
+                                        className="hidden h-8 w-auto lg:block"
+                                        src="/logo.png"
+                                        alt="Your Company"
+                                    />
+                                </Link>
                             </div>
                             <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
                                 {navigation.map((item) => <Link
@@ -225,13 +227,7 @@ export default function Navbar() {
                                 <div
                                     className="text-sm font-medium text-gray-400">{session.user.email}</div>
                             </div>
-                            <button
-                                type="button"
-                                className="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                            >
-                                <span className="sr-only">View notifications</span>
-                                <BellIcon className="h-6 w-6" aria-hidden="true"/>
-                            </button>
+
                         </div>
                         <div className="mt-3 space-y-1 px-2 sm:px-3">
                             {userNavigation.map((item) => <Disclosure.Button
