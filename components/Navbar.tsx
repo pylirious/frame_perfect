@@ -9,6 +9,7 @@ import {useRouter} from "next/router";
 import axios from "axios";
 import {classNames} from "../utils";
 import {Notification} from "@prisma/client";
+import Image from "next/image";
 
 const userNavigation = [{name: 'Your Profile', href: '/profile'}, {name: 'Settings', href: '#'}, {
     name: 'Sign out', href: '/logout'
@@ -53,12 +54,12 @@ export default function Navbar() {
                             <div className="flex flex-shrink-0 items-center">
                                 <img
                                     className="block h-8 w-auto lg:hidden"
-                                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                                    src="/logo.png"
                                     alt="Your Company"
                                 />
                                 <img
                                     className="hidden h-8 w-auto lg:block"
-                                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                                    src="/logo.png"
                                     alt="Your Company"
                                 />
                             </div>
