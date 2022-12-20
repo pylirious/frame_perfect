@@ -55,7 +55,7 @@ function Games() {
             <Head>
                 <title>Speedruns</title>
             </Head>
-            <div className="m-5 bg-white shadow px-4 py-24 sm:rounded-lg sm:p-10 sm:m-20">
+            <div className="m-5 bg-gray-300 shadow px-4 mt-24 py-5 sm:rounded-lg sm:p-10 sm:m-20">
                 <div className={"flex flex-row"}>
 
                     <h1 className={"text-2xl"}>Speedruns</h1>
