@@ -76,6 +76,7 @@ export default function Navbar() {
                             <div className="flex-shrink-0">
                                 <button
                                     type="button"
+                                    id={"createRunBtn"}
                                     onClick={() => setOpen(true)}
                                     className="relative inline-flex items-center rounded-md border border-transparent bg-indigo-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800"
                                 >
