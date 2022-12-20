@@ -9,7 +9,6 @@ import {useRouter} from "next/router";
 import axios from "axios";
 import {classNames} from "../utils";
 import {Notification} from "@prisma/client";
-import Image from "next/image";
 
 const userNavigation = [{name: 'Your Profile', href: '/profile'}, {name: 'Settings', href: '#'}, {
     name: 'Sign out', href: '/logout'
@@ -74,7 +73,7 @@ export default function Navbar() {
                         </div>
                         <div className="flex items-center">
                             <div className="flex-shrink-0">
-                                <button
+                                {session && session.user && <button
                                     type="button"
                                     id={"createRunBtn"}
                                     onClick={() => setOpen(true)}
@@ -82,7 +81,7 @@ export default function Navbar() {
                                 >
                                     <PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true"/>
                                     <span>New Speedrun</span>
-                                </button>
+                                </button>}
                             </div>
                             <div className="hidden md:ml-4 md:flex md:flex-shrink-0 md:items-center">
                                 <Popover className="relative">

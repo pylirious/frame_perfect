@@ -15,6 +15,7 @@ import ms from "ms";
 import {useSession} from "next-auth/react";
 import {Dialog, Transition} from '@headlessui/react'
 import {classNames} from "../../utils";
+import Head from "next/head";
 
 function Speedrun() {
     const [run, setRun] = useState<SpeedRunWithUserGameAndApproval>();
@@ -41,6 +42,9 @@ function Speedrun() {
 
     return (
         run ? <>
+            <Head>
+                <title>{run.name} - {run.game.name}</title>
+            </Head>
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
                     <Transition.Child

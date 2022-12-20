@@ -11,6 +11,8 @@ import Link from "next/link";
 import {GameId} from "../../types/Api";
 import {Switch} from "@headlessui/react";
 import {classNames} from "../../utils";
+import Head from "next/head";
+import {useSession} from "next-auth/react";
 
 function GameView() {
     const router = useRouter()
@@ -18,7 +20,7 @@ function GameView() {
     const [game, setGame] = useState<Game>();
     const [open, setOpen] = useState(false);
     const [onlyVerified, setOnlyVerified] = useState(false);
-
+    const {data: session} = useSession()
     const {setMessage} = useContext(MessageContext);
     /*
     Once the router is loaded/ready the data of the game is fetchted
@@ -45,6 +47,9 @@ function GameView() {
     return (
         game ?
             <>
+                <Head>
+                    <title>{game.name}</title>
+                </Head>
                 <CreationModal open={open} setOpen={setOpen} game={game}/>
                 <div className="bg-gray-700">
                     <div className="p-20">
@@ -75,14 +80,14 @@ function GameView() {
                                         </Switch.Label>
                                     </Switch.Group>
                                 </div>
-                                <div className="ml-4 mt-2 flex-shrink-0">
+                                {session && session.user && <div className="ml-4 mt-2 flex-shrink-0">
                                     <button
                                         type="button"
                                         onClick={() => setOpen(true)}
                                         className="relative inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                     >New Speedrun
                                     </button>
-                                </div>
+                                </div>}
                             </div>
                             <div className="mt-5">
                                 <div className="overflow-hidden bg-white shadow sm:rounded-md">

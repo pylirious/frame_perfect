@@ -2,11 +2,15 @@ import type {NextPage} from 'next'
 import {ChevronRightIcon} from '@heroicons/react/20/solid'
 import {signIn} from "next-auth/react";
 import Discord from "next-auth/providers/discord";
+import Head from "next/head";
 
 
 const Home: NextPage = () => {
     return (
         <>
+            <Head>
+                <title>Frame Perfect</title>
+            </Head>
             <div className="relative overflow-hidden bg-gray-800 pb-96">
                 <main className="mt-16 sm:mt-24">
                     <div className="mx-auto max-w-7xl">

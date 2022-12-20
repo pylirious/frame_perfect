@@ -25,7 +25,7 @@ function Profile() {
     }
     return (<>
         <Head>
-            <title>Profil</title>
+            <title>Profile</title>
         </Head>
         <div className={"m-5 bg-white shadow px-4 py-5 sm:rounded-lg sm:px-10 sm:m-20 flex flex-col"}>
             <div

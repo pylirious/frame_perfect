@@ -6,11 +6,14 @@ describe('Navigation to minecraft page', () => {
     // Find a link with an href attribute containing "games" and click it
     cy.get('a[href*="games"]').click()
 
+    // The new url should include "/games"
+    cy.url().should('include', '/games')
+
     // Find a link with an href attribute containing "minecraft" and click it
     cy.get('a[href*="minecraft"]').click()
 
 
-    // The new url should include "/games"
+    // The new url should include "/minecraft"
     cy.url().should('include', '/minecraft')
 
     // The new page should contain an h1 with "Speedruns"
