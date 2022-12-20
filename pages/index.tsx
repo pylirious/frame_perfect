@@ -9,7 +9,7 @@ const Home: NextPage = () => {
             <Head>
                 <title>Frame Perfect</title>
             </Head>
-            <div className="relative overflow-hidden bg-gray-800 pb-96">
+            <div className="relative overflow-hidden bg-gray-800 h-[100vh]">
                 <main className="mt-16 sm:mt-24">
                     <div className="mx-auto max-w-7xl">
                         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
